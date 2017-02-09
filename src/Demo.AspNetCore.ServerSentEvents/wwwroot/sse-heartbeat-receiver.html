@@ -1,0 +1,31 @@
+﻿<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <title>Server-Sent Events (SSE) Heartbeat Receiver</title>
+    </head>
+    <body>
+        <div id="sseOutput"></div>
+        <script>
+            var sseOutput = document.getElementById('sseOutput');
+            var appendToSseOutput = function(data) {
+                sseOutput.appendChild(document.createTextNode(data));
+                sseOutput.appendChild(document.createElement('br'));
+            };
+
+            var source = new EventSource("/see-heartbeat");
+            source.onopen = function() { appendToSseOutput('-- CONNECTION ESTABLISHED --'); }; 
+            source.onerror = function () { appendToSseOutput('-- CONNECTION FAILED --'); };
+
+            source.onmessage = function (event) {
+                console.log('SSE EVENT: { id: "' + event.id + '", data: "' + event.data + '" }')
+
+                appendToSseOutput(event.data);
+
+                if (event.id == "CLOSE") {
+                    source.close(); 
+                }
+            }
+        </script>
+    </body>
+</html>

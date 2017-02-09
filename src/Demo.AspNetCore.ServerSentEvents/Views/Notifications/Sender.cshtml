@@ -1,0 +1,31 @@
+﻿@model Demo.AspNetCore.ServerSentEvents.Model.NotificationsSenderViewModel
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Server-Sent Events (SSE) Notifications Sender</title>
+</head>
+<body>
+    <form asp-controller="notifications" asp-action="sse-notifications-sender" method="post">
+        <fieldset>
+            <legend>New StarWars Character</legend>
+            <div>
+                <label asp-for="Alert"></label>
+            </div>
+            <div>
+                <input asp-for="Alert" type="checkbox" />
+            </div>
+            <div>
+                <label asp-for="Notification"></label>
+            </div>
+            <div>
+                <textarea asp-for="Notification"></textarea>
+            </div>
+            <div>
+                <input type="submit" value="Send" />
+            </div>
+        </fieldset>
+    </form>
+</body>
+</html>
