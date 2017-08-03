@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.ResponseCompression;
 using Lib.AspNetCore.ServerSentEvents;
 using Demo.AspNetCore.ServerSentEvents.Services;
 
@@ -11,8 +13,14 @@ namespace Demo.AspNetCore.ServerSentEvents
     {
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddResponseCompression(options =>
+            {
+                options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "text/event-stream" });
+            });
+
             services.AddServerSentEvents();
             services.AddServerSentEvents<INotificationsServerSentEventsService, NotificationsServerSentEventsService>();
+
             services.AddMvc();
         }
 
@@ -23,7 +31,9 @@ namespace Demo.AspNetCore.ServerSentEvents
                 app.UseDeveloperExceptionPage();
             }
 
-            app.MapServerSentEvents("/see-heartbeat")
+
+            app.UseResponseCompression()
+                .MapServerSentEvents("/see-heartbeat")
                 .MapServerSentEvents("/sse-notifications", serviceProvider.GetService<NotificationsServerSentEventsService>())
                 .UseStaticFiles()
                 .UseMvc(routes =>
