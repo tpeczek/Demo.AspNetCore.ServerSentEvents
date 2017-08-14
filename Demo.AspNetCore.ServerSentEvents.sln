@@ -3,9 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.26430.4
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0AD68EE5-16EA-4738-B0ED-6093CF394BFB}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.AspNetCore.ServerSentEvents", "src\Demo.AspNetCore.ServerSentEvents\Demo.AspNetCore.ServerSentEvents.csproj", "{4D928371-6971-4259-903D-876181A9BC8F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.AspNetCore.ServerSentEvents", "Demo.AspNetCore.ServerSentEvents\Demo.AspNetCore.ServerSentEvents.csproj", "{4D928371-6971-4259-903D-876181A9BC8F}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
