@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Lib.AspNetCore.ServerSentEvents;
 using Demo.AspNetCore.ServerSentEvents.Services;
 
@@ -32,8 +33,9 @@ namespace Demo.AspNetCore.ServerSentEvents
             });
 
             services.AddServerSentEvents();
-            services.AddServerSentEvents<INotificationsServerSentEventsService, NotificationsServerSentEventsService>();
+            services.AddSingleton<IHostedService, HeartbeatService>();
 
+            services.AddServerSentEvents<INotificationsServerSentEventsService, NotificationsServerSentEventsService>();
             services.AddNotificationsService(Configuration);
 
             services.AddMvc();
@@ -54,18 +56,6 @@ namespace Demo.AspNetCore.ServerSentEvents
                 {
                     routes.MapRoute(name: "default", template: "{controller=Notifications}/{action=sse-notifications-receiver}");
                 });
-
-            // Only for demo purposes, don't do this kind of thing to your production
-            IServerSentEventsService serverSentEventsService = serviceProvider.GetService<IServerSentEventsService>();
-            System.Threading.Thread eventsHeartbeatThread = new System.Threading.Thread(new System.Threading.ThreadStart(() =>
-            {
-                while (true)
-                {
-                    serverSentEventsService.SendEventAsync($"Demo.AspNetCore.ServerSentEvents Heartbeat ({DateTime.UtcNow} UTC)").Wait();
-                    System.Threading.Thread.Sleep(5000);
-                }
-            }));
-            eventsHeartbeatThread.Start();
         }
         #endregion
     }
