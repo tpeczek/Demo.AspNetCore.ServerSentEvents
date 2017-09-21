@@ -2,7 +2,7 @@
 
 namespace Demo.AspNetCore.ServerSentEvents.Services
 {
-    public class NotificationsServerSentEventsService : ServerSentEventsService, INotificationsServerSentEventsService
+    internal class NotificationsServerSentEventsService : ServerSentEventsService, INotificationsServerSentEventsService
     {
         public NotificationsServerSentEventsService()
         {

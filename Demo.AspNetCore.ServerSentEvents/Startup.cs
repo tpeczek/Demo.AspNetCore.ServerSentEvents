@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Linq;
-using Microsoft.Extensions.DependencyInjection;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 using Lib.AspNetCore.ServerSentEvents;
 using Demo.AspNetCore.ServerSentEvents.Services;
 
@@ -11,6 +12,18 @@ namespace Demo.AspNetCore.ServerSentEvents
 {
     public class Startup
     {
+        #region Properties
+        public IConfiguration Configuration { get; }
+        #endregion
+
+        #region Constructor
+        public Startup(IConfiguration configuration)
+        {
+            Configuration = configuration;
+        }
+        #endregion
+
+        #region Methods
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddResponseCompression(options =>
@@ -21,6 +34,8 @@ namespace Demo.AspNetCore.ServerSentEvents
             services.AddServerSentEvents();
             services.AddServerSentEvents<INotificationsServerSentEventsService, NotificationsServerSentEventsService>();
 
+            services.AddNotificationsService(Configuration);
+
             services.AddMvc();
         }
 
@@ -30,8 +45,7 @@ namespace Demo.AspNetCore.ServerSentEvents
             {
                 app.UseDeveloperExceptionPage();
             }
-
-
+            
             app.UseResponseCompression()
                 .MapServerSentEvents("/see-heartbeat")
                 .MapServerSentEvents("/sse-notifications", serviceProvider.GetService<NotificationsServerSentEventsService>())
@@ -53,5 +67,6 @@ namespace Demo.AspNetCore.ServerSentEvents
             }));
             eventsHeartbeatThread.Start();
         }
+        #endregion
     }
 }

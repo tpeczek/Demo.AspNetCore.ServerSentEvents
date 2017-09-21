@@ -2,7 +2,7 @@
 
 namespace Demo.AspNetCore.ServerSentEvents.Services
 {
-    public interface INotificationsServerSentEventsService : IServerSentEventsService
+    internal interface INotificationsServerSentEventsService : IServerSentEventsService
     {
     }
 }
