@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26430.4
+VisualStudioVersion = 15.0.26730.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Demo.AspNetCore.ServerSentEvents", "Demo.AspNetCore.ServerSentEvents\Demo.AspNetCore.ServerSentEvents.csproj", "{4D928371-6971-4259-903D-876181A9BC8F}"
 EndProject
@@ -19,7 +19,7 @@ Global
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{4D928371-6971-4259-903D-876181A9BC8F} = {0AD68EE5-16EA-4738-B0ED-6093CF394BFB}
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {54DC07BA-0B88-401B-8C14-601E5D16794C}
 	EndGlobalSection
 EndGlobal

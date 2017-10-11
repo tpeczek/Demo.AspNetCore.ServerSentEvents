@@ -6,7 +6,7 @@ using Lib.AspNetCore.ServerSentEvents;
 
 namespace Demo.AspNetCore.ServerSentEvents.Services
 {
-    public class HeartbeatService : IHostedService
+    internal class HeartbeatService : IHostedService
     {
         #region Fields
         private const string HEARTBEAT_MESSAGE_FORMAT = "Demo.AspNetCore.ServerSentEvents Heartbeat ({0} UTC)";
