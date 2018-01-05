@@ -13,7 +13,7 @@
     <PackageReference Include="Microsoft.AspNetCore.StaticFiles" Version="2.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc" Version="2.0.0" />
     <PackageReference Include="StackExchange.Redis" Version="1.2.6" />
-    <PackageReference Include="Lib.AspNetCore.ServerSentEvents" Version="1.1.1" />
+    <PackageReference Include="Lib.AspNetCore.ServerSentEvents" Version="1.2.0" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Views\**\*;wwwroot\**\*">
