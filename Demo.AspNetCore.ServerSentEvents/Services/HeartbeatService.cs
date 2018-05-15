@@ -6,15 +6,12 @@ using Lib.AspNetCore.ServerSentEvents;
 
 namespace Demo.AspNetCore.ServerSentEvents.Services
 {
-    internal class HeartbeatService : IHostedService
+    internal class HeartbeatService : BackgroundService
     {
         #region Fields
         private const string HEARTBEAT_MESSAGE_FORMAT = "Demo.AspNetCore.ServerSentEvents Heartbeat ({0} UTC)";
 
         private readonly IServerSentEventsService _serverSentEventsService;
-
-        private Task _heartbeatTask;
-        private CancellationTokenSource _cancellationTokenSource;
         #endregion
 
         #region Constructor
@@ -25,34 +22,13 @@ namespace Demo.AspNetCore.ServerSentEvents.Services
         #endregion
 
         #region Methods
-        public Task StartAsync(CancellationToken cancellationToken)
+        protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            _cancellationTokenSource = CancellationTokenSource.CreateLinkedTokenSource(cancellationToken);
-
-            _heartbeatTask = HeartbeatAsync(_cancellationTokenSource.Token);
-
-            return _heartbeatTask.IsCompleted ? _heartbeatTask : Task.CompletedTask;
-        }
-
-        public async Task StopAsync(CancellationToken cancellationToken)
-        {
-            if (_heartbeatTask != null)
-            {
-                _cancellationTokenSource.Cancel();
-
-                await Task.WhenAny(_heartbeatTask, Task.Delay(-1, cancellationToken));
-
-                cancellationToken.ThrowIfCancellationRequested();
-            }
-        }
-
-        private async Task HeartbeatAsync(CancellationToken cancellationToken)
-        {
-            while (!cancellationToken.IsCancellationRequested)
+            while (!stoppingToken.IsCancellationRequested)
             {
                 await _serverSentEventsService.SendEventAsync(String.Format(HEARTBEAT_MESSAGE_FORMAT, DateTime.UtcNow));
 
-                await Task.Delay(TimeSpan.FromSeconds(5), cancellationToken);
+                await Task.Delay(TimeSpan.FromSeconds(5), stoppingToken);
             }
         }
         #endregion
