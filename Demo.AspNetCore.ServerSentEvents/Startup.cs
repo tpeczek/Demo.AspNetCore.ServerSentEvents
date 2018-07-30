@@ -27,21 +27,23 @@ namespace Demo.AspNetCore.ServerSentEvents
         #region Methods
         public void ConfigureServices(IServiceCollection services)
         {
+            // Register default ServerSentEventsService.
+            services.AddServerSentEvents();
+
+            // Registers custom ServerSentEventsService which will be used by second middleware, otherwise they would end up sharing connected users.
+            services.AddServerSentEvents<INotificationsServerSentEventsService, NotificationsServerSentEventsService>();
+
+            services.AddSingleton<IHostedService, HeartbeatService>();
+            services.AddNotificationsService(Configuration);
+
             services.AddResponseCompression(options =>
             {
                 options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "text/event-stream" });
             });
-
-            services.AddServerSentEvents();
-            services.AddSingleton<IHostedService, HeartbeatService>();
-
-            services.AddServerSentEvents<INotificationsServerSentEventsService, NotificationsServerSentEventsService>();
-            services.AddNotificationsService(Configuration);
-
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, IServiceProvider serviceProvider)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -49,8 +51,10 @@ namespace Demo.AspNetCore.ServerSentEvents
             }
             
             app.UseResponseCompression()
+                // Set up first Server-Sent Events endpoint.
                 .MapServerSentEvents("/see-heartbeat")
-                .MapServerSentEvents("/sse-notifications", serviceProvider.GetService<NotificationsServerSentEventsService>())
+                // Set up second (separated) Server-Sent Events endpoint.
+                .MapServerSentEvents<NotificationsServerSentEventsService>("/sse-notifications")
                 .UseStaticFiles()
                 .UseMvc(routes =>
                 {

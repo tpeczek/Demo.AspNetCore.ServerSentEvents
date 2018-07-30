@@ -18,7 +18,7 @@
             source.onerror = function () { appendToSseOutput('-- CONNECTION FAILED --'); };
 
             source.onmessage = function (event) {
-                console.log('SSE EVENT: { id: "' + event.id + '", data: "' + event.data + '" }')
+                console.log('SSE EVENT: { id: "' + event.id + '", type: "' + event.type + '", data: "' + event.data + '" }')
 
                 appendToSseOutput(event.data);
 
