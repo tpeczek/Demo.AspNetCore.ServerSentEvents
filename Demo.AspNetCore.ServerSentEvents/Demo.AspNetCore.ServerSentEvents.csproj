@@ -1,16 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Web">
   <PropertyGroup>
-    <TargetFramework>netcoreapp2.1</TargetFramework>
+    <TargetFramework>netcoreapp2.2</TargetFramework>
     <!--<TargetFramework>net461</TargetFramework>-->
-    <PreserveCompilationContext>true</PreserveCompilationContext>
-    <AssemblyName>Demo.AspNetCore.ServerSentEvents</AssemblyName>
-    <OutputType>Exe</OutputType>
-    <PackageId>Demo.AspNetCore.ServerSentEvents</PackageId>
+    <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.App" Version="2.1.0" />
-    <PackageReference Include="StackExchange.Redis" Version="1.2.6" />
-    <PackageReference Include="Lib.AspNetCore.ServerSentEvents" Version="2.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.App" />
+    <PackageReference Include="StackExchange.Redis.StrongName" Version="1.2.6" />
+    <PackageReference Include="Lib.AspNetCore.ServerSentEvents" Version="3.0.0" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Views\**\*;wwwroot\**\*">
