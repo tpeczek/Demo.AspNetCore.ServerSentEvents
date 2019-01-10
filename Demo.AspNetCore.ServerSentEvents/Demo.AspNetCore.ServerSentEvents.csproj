@@ -7,7 +7,7 @@
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.App" />
     <PackageReference Include="StackExchange.Redis.StrongName" Version="1.2.6" />
-    <PackageReference Include="Lib.AspNetCore.ServerSentEvents" Version="3.0.0" />
+    <PackageReference Include="Lib.AspNetCore.ServerSentEvents" Version="3.1.0" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Views\**\*;wwwroot\**\*">
