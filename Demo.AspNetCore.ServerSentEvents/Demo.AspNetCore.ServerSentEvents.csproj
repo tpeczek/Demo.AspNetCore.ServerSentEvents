@@ -4,8 +4,8 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
   <ItemGroup>
+    <PackageReference Include="Lib.AspNetCore.ServerSentEvents" Version="4.0.0-preview3" />
     <PackageReference Include="StackExchange.Redis.StrongName" Version="1.2.6" />
-    <PackageReference Include="Lib.AspNetCore.ServerSentEvents" Version="4.0.0-preview" />
   </ItemGroup>
   <ItemGroup>
     <None Update="Views\**\*;wwwroot\**\*">
