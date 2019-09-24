@@ -39,25 +39,29 @@ namespace Demo.AspNetCore.ServerSentEvents
             {
                 options.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(new[] { "text/event-stream" });
             });
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+
+            services.AddControllersWithViews();
         }
 
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            
+
             app.UseResponseCompression()
-                // Set up first Server-Sent Events endpoint.
-                .MapServerSentEvents("/see-heartbeat")
-                // Set up second (separated) Server-Sent Events endpoint.
-                .MapServerSentEvents<NotificationsServerSentEventsService>("/sse-notifications")
                 .UseStaticFiles()
-                .UseMvc(routes =>
+                .UseRouting()
+                .UseEndpoints(endpoints =>
                 {
-                    routes.MapRoute(name: "default", template: "{controller=Notifications}/{action=sse-notifications-receiver}");
+                    // Set up first Server-Sent Events endpoint.
+                    endpoints.MapServerSentEvents("/see-heartbeat");
+
+                    // Set up second (separated) Server-Sent Events endpoint.
+                    endpoints.MapServerSentEvents<NotificationsServerSentEventsService>("/sse-notifications");
+
+                    endpoints.MapControllerRoute("default", "{controller=Notifications}/{action=sse-notifications-receiver}");
                 });
         }
         #endregion
