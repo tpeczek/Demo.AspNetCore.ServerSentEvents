@@ -30,7 +30,10 @@ namespace Demo.AspNetCore.ServerSentEvents
             services.AddServerSentEvents();
 
             // Registers custom ServerSentEventsService which will be used by second middleware, otherwise they would end up sharing connected users.
-            services.AddServerSentEvents<INotificationsServerSentEventsService, NotificationsServerSentEventsService>();
+            services.AddServerSentEvents<INotificationsServerSentEventsService, NotificationsServerSentEventsService>(options =>
+            {
+                options.ReconnectInterval = 5000;
+            });
 
             services.AddSingleton<IHostedService, HeartbeatService>();
             services.AddNotificationsService(Configuration);

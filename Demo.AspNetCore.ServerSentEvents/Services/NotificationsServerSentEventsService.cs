@@ -7,8 +7,6 @@ namespace Demo.AspNetCore.ServerSentEvents.Services
     {
         public NotificationsServerSentEventsService(IOptions<ServerSentEventsServiceOptions<NotificationsServerSentEventsService>> options)
             : base(options.ToBaseServerSentEventsServiceOptions())
-        {
-            ChangeReconnectIntervalAsync(5000);
-        }
+        { }
     }
 }

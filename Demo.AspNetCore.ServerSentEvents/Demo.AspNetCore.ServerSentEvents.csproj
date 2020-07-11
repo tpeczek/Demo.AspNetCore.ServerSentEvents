@@ -4,7 +4,7 @@
     <AspNetCoreHostingModel>InProcess</AspNetCoreHostingModel>
   </PropertyGroup>
   <ItemGroup>
-    <PackageReference Include="Lib.AspNetCore.ServerSentEvents" Version="5.0.0-alpha1" />
+    <PackageReference Include="Lib.AspNetCore.ServerSentEvents" Version="5.1.0" />
     <PackageReference Include="StackExchange.Redis.StrongName" Version="1.2.6" />
   </ItemGroup>
   <ItemGroup>
