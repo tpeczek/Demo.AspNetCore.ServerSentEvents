@@ -1,5 +1,4 @@
 ﻿using System.Linq;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.Extensions.Configuration;
@@ -34,6 +33,12 @@ namespace Demo.AspNetCore.ServerSentEvents
             {
                 options.ReconnectInterval = 5000;
             });
+
+            // Register cookie based clients identifier provider for Server Sent Events
+            // services.AddServerSentEventsClientIdProvider<CookieBasedServerSentEventsClientIdProvider>();
+
+            // Register IServerSentEventsNoReconnectClientsIdsStore backed by memory store.
+            // services.AddInMemoryServerSentEventsNoReconnectClientsIdsStore();
 
             services.AddSingleton<IHostedService, HeartbeatService>();
             services.AddNotificationsService(Configuration);
